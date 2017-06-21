@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>test</h1>
+<style>
+    .demo {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 140px;
+        height: 20px;
+        line-height: 20px;
+        font-size: 12px;
+        overflow: hidden;
+        -ms-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .demo:hover {
+        height: auto;
+        white-space: normal;
+    }
+
+    #box{
+        position: relative;
+        margin: 50px auto;
+        width: 700px;
+        height: 300px;
+        border: 2px solid red;
+    }
+    #small{
+        position: absolute;
+        bottom: 0px;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        width: 80px;
+        height: 50px;
+        margin: auto;
+        border: 2px solid blue;
+    }
+</style>
+<a href="#" target="_blank" class="demo">这是一段测试用的文本，没有实际意义，只是想达到显示效果。</a>
+<button id="loginBnt" type="button">
+    测试deferred
+</button>
+<script>
+    $(function () {
+        $("#loginBnt").click(function () {
+
+//            var apiRequest = new ApiRequest();
+//            apiRequest.type = "POST";
+//            apiRequest.url = "http://localhost:8080/api/users/login?username=admin&password=admin";
+//            var dtd = apiRequest.send();
+//            $.when(apiRequest.send())
+//                    .done(function (data, state, result) {
+//                        console.log("state:" + state);
+//                        console.log("success result:" + JSON.stringify(data));
+//                        if (state == 'success') {
+//                            $.cookie('islogin', 'true', {path: '/'});
+//                            $.cookie('author_code', author_code, {path: '/'});
+//                            window.location.href = "/pages/main.html";
+//                        } else {
+////                        alert("error");
+//                        }
+//                    })
+//                    .fail(function (data, result, state) {
+//                        console.log("state: " + state + ", status: " + result.status + ", statusText: " + result.statusText);
+//                        alert("error");
+//                    });
+
+
+        });
+    });
+</script>
+
+<div id="box"><div id="small"></div></div>
+
+
+</body>
+</html>

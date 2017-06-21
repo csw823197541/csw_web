@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSW-登录界面</title>
+    <link href="static/css/login.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/static/frameworks/jquery/jQuery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="/static/frameworks/jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/js/pageJs/apiRequest.js"></script>
+</head>
+<body>
+    <div class="login">
+        <div class="message">CSW-管理员登录</div>
+        <div id="darkBannerWrap"></div>
+
+        <form method="POST">
+            <!--<input name="action" value="login" type="hidden">-->
+            <input id="username" name="username" placeholder="请输入用户名" required="required" type="text">
+            <hr class="hr15">
+            <input id="password" name="password" placeholder="请输入密码" required="required" type="password">
+            <hr class="hr15">
+            <input id="loginBnt" value="登录" style="width:100%;" type="button">
+            <hr class="hr20">
+        </form>
+    </div>
+<script>
+    $(function() {
+        $("#loginBnt").click(function(){
+            var username = $("#username").val();
+            var password = $("#password").val();
+            var author_code = "Basic " + btoa(username + ":" + password);
+            var apiRequest = new ApiRequest();
+            apiRequest.type = "POST";
+            apiRequest.url = "http://localhost:8080/api/users/login?username=" + username +"&password=" + password;
+//            var dtd = $.Deferred();
+            $.when(apiRequest.send())
+            .done(function (data, state, result) {
+                console.log("state:" + state);
+                console.log("success result:" + JSON.stringify(data));
+                if (state == 'success') {
+                    $.cookie('islogin', 'true', {path: '/'});
+                    $.cookie('author_code', author_code, {path: '/'});
+                    window.location.href = "/pages/main.html";
+//                    alert("success");
+                } else {
+//                        alert("error");
+                }
+            })
+            .fail(function (data, result, state) {
+                console.log("state: " + state + ", status: " + result.status + ", statusText: " + result.statusText);
+                alert("error");
+            });
+        });
+    });
+</script>
+</body>
+</html>
