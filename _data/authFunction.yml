@@ -1,0 +1,34 @@
+- name: ID
+  id: id
+  visible: false
+  placeholder:
+
+- name: 父ID
+  id: parentId
+  span: 1
+  placeholder: 请输入父ID
+
+- name: 菜单名称
+  id: fullName
+  span: 1
+  placeholder: 请输入菜单名称
+
+- name: 图标
+  id: icon
+  span: 1
+  placeholder: 请输入图标
+
+- name: URL地址
+  id: url
+  span: 1
+  placeholder: 请输入URL地址
+
+- name: 目标
+  id: target
+  span: 1
+  placeholder: 请输入目标
+
+- name: 导航菜单
+  id: isMenu
+  span: 1
+  placeholder: 请输入导航菜单

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="/static/frameworks/zTree/css/zTreeStyle/zTreeStyle.css"/>
+    <script type="text/javascript" src="/static/frameworks/jquery/jQuery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="/static/frameworks/zTree/js/jquery.ztree.all.min.js"></script>
+    <style type="text/css">
+        #Container {
+            width: 100%;
+            height: 100%;
+            margin: 0 auto; /*设置整个容器在浏览器中水平居中*/
+            /*background: #CF3;*/
+        }
+
+        #Content {
+            background: #0FF;
+        }
+
+        #Content-Left {
+            height: 450px;
+            width: 22%;
+            float: left; /*设置浮动，实现多列效果，div+Css布局中很重要的*/
+            /*background: #90C;*/
+            border: 1px solid #DDDDDD;
+            border-radius: 3px;
+        }
+
+        #Content-Main {
+            height: 450px;
+            width: 77%;
+            float: right; /*设置浮动，实现多列效果，div+Css布局中很重要的*/
+            /*background: #90C;*/
+            /*border: 1px solid red;*/
+        }
+
+        .Clear {
+            clear: both;
+        }
+    </style>
+    <script type="text/javascript">
+        var setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+        };
+
+        var zNodes =[
+            { id:1, pId:0, name:"展开、折叠 自定义图标不同", open:true, iconOpen:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/1_open.png", iconClose:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/1_close.png"},
+            { id:11, pId:1, name:"叶子节点1", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/2.png"},
+            { id:12, pId:1, name:"叶子节点2", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/3.png"},
+            { id:13, pId:1, name:"叶子节点3", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/5.png"},
+            { id:2, pId:0, name:"展开、折叠 自定义图标相同", open:true, icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/4.png"},
+            { id:21, pId:2, name:"叶子节点1", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/6.png"},
+            { id:22, pId:2, name:"叶子节点2", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/7.png"},
+            { id:23, pId:2, name:"叶子节点3", icon:"../../static/frameworks/zTree/css/zTreeStyle/img/diy/8.png"},
+            { id:3, pId:0, name:"不使用自定义图标", open:true },
+            { id:31, pId:3, name:"叶子节点1"},
+            { id:32, pId:3, name:"叶子节点2"},
+            { id:33, pId:3, name:"叶子节点3"}
+
+        ];
+
+        $(document).ready(function(){
+            $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        });
+    </script>
+
+</head>
+<body>
+<div id="Container">
+    <div id="Content">
+        <div id="Content-Left">
+            <div class="zTreeDemoBackground left">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+        </div>
+        <div id="Content-Main">
+            <iframe src="/pages/safeAuth/authFunction.html" border="0" frameborder="0"
+                    width="100%" height="100%" marginwidth="0" marginheight="0"></iframe>
+        </div>
+    </div>
+    <div class="Clear"><!--如何你上面用到float,下面布局开始前最好清除一下。--></div>
+</div>
+</body>
+</html>

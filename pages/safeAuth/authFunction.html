@@ -2,14 +2,14 @@
 layout: base_page
 ---
 {% include base/tip/tip.html %}
-{% include base/table/table.html apiName = 'messageTypes' %}
-{% include base/modal/modal.html inData = site.data.messageType %}
+{% include base/table/table.html apiName = 'authFunctions' %}
+{% include base/modal/modal.html inData = site.data.authFunction %}
 
 <script type="text/javascript">
 
     var tableGen = new TableGen();
-    tableGen.editFields = new Array('id', 'type', 'direction', 'className', 'processMethod', 'notes');
-    tableGen.apiName = 'messageTypes';
+    tableGen.editFields = new Array('id', 'parentId', 'fullName', 'icon', 'url', 'target', 'isMenu');
+    tableGen.apiName = 'authFunctions';
     tableGen.modalID = 'myModal';
     tableGen.tableID = 'table';
     tableGen.setTable = function (inTable) {
@@ -25,31 +25,36 @@ layout: base_page
                 field: 'id',
                 align: 'center',
                 sortable: true,
-                width: "6%",
+//                width: "6%",
                 cellStyle: tableGen.formatTableCell
             }, {
-                title: '报文类型',
-                field: 'type',
+                title: '父ID',
+                field: 'parentId',
                 align: 'center',
                 cellStyle: tableGen.formatTableCell
             }, {
-                title: '接收/发送',
-                field: 'direction',
+                title: '菜单名称',
+                field: 'fullName',
                 align: 'center',
                 cellStyle: tableGen.formatTableCell
             }, {
-                title: '插件类名',
-                field: 'className',
+                title: '图标',
+                field: 'icon',
                 align: 'center',
                 cellStyle: tableGen.formatTableCell
             }, {
-                title: '处理方法',
-                field: 'processMethod',
+                title: 'URL地址',
+                field: 'url',
                 align: 'center',
                 cellStyle: tableGen.formatTableCell
             },{
-                title: '备注',
-                field: 'notes',
+                title: '目标',
+                field: 'target',
+                align: 'center',
+                cellStyle: tableGen.formatTableCell
+            },{
+                title: '导航菜单',
+                field: 'isMenu',
                 align: 'center',
                 cellStyle: tableGen.formatTableCell
             }, {
@@ -57,7 +62,7 @@ layout: base_page
                 field: 'operate',
                 align: 'center',
                 valign: 'middle',
-                width: "8%",
+//                width: "8%",
                 formatter: tableGen.operateFormatter,
                 events: operateEvents
             }]
@@ -67,10 +72,10 @@ layout: base_page
     tableGen.bind();
 
     var modalGen = new ModalGen();
-    modalGen.editFields = new Array('id', 'type', 'direction', 'className', 'processMethod', 'notes');
+    modalGen.editFields = new Array('id', 'parentId', 'fullName', 'icon', 'url', 'target', 'isMenu');
     modalGen.modalID = 'myModal';
     modalGen.saveButtonID = 'saveObj';
-    modalGen.validates = {type: "notEmpty", className: "notEmpty"};
+//    modalGen.validates = {type: "notEmpty", className: "notEmpty"};
     modalGen.bind();
 
 </script>
