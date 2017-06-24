@@ -1,6 +1,6 @@
 - name: ID
   id: id
-  visible: false
+  visible: true
   placeholder:
 
 - name: 父ID

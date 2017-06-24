@@ -1,0 +1,95 @@
+<!-- Modal -->
+<div class="modal fade" id="funModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><strong>添加信息</strong></h4>
+            </div>
+            <div class="modal-body">
+                <div id="myForm" action="#" method="post" class="form-horizontal">
+                    <div class="form-group">
+                        <label for="id" class="col-sm-2 control-label">ID</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="id" name="id" placeholder="id号默认不显示">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="parentId" class="col-sm-2 control-label">父菜单</label>
+                        <div class="col-sm-4">
+                            <select id="parentId" class="form-control" name="parentId">
+                                <option value="0">导航菜单</option>
+                            </select>
+                        </div>
+                        <label for="fullName" class="col-sm-2 control-label">菜单名称</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                   placeholder="请输入菜单名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="isMenu" class="col-sm-2 control-label">导航菜单</label>
+                        <div class="col-sm-4">
+                            <select id="isMenu" class="form-control" name="isMenu">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select>
+                        </div>
+                        <label for="url" class="col-sm-2 control-label">URL地址</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="url" name="url"
+                                   placeholder="请输入导航地址">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="saveObj" type="button" class="btn btn-success">
+                    <i class="glyphicon glyphicon-ok"></i> 保存
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <i class="glyphicon glyphicon-remove"></i> 取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function initParentId(globalData) {
+        for (var i = 0; i < globalData.length; i++) {
+            var nodeObj = globalData[i];
+            if (nodeObj.menu) {
+                $("#parentId").append(new Option(nodeObj.fullName, nodeObj.id, false, true));
+            }
+        }
+        $("#parentId").select2('val', '0');
+    }
+
+    $(document).ready(function () {
+        $("#parentId").select2({
+            language: "zh-CN", //设置 提示语言
+            width: "100%" //设置下拉框的宽度
+        });
+        $("#parentId").on("change", function (e) {
+            var res = $("#parentId").select2("data");
+            var id = res[0].id;
+            console.log(res[0].id);
+            if (id != "0") { //不是导航菜单
+                $("#isMenu").select2('val', '0');
+            }
+            if (id == "0") { //是导航菜单
+                $("#isMenu").select2('val', '1');
+            }
+        });
+        $("#isMenu").select2({
+            language: "zh-CN", //设置 提示语言
+            width: "70px" //设置下拉框的宽度
+        });
+    });
+</script>
+
+<script type="text/javascript" src="/static/js/pageJs/modal_gen.js" charset="utf-8"></script>

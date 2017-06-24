@@ -17,6 +17,8 @@ ModalGen.prototype.bind = function () {
 };
 
 ModalGen.prototype.init = function () {
+    var $modal = $('#' + this.modalID);
+    // $modal.draggable();
 
 };
 
@@ -40,7 +42,7 @@ ModalGen.prototype.createOrUpdate = function () {
                 //params = JSON.parse(params);
                 var id = $('#id').val();//取得隐藏id控件的值，用来判断saveObj方法是创建记录，还是还是修改记录
                 console.log("id:" + id);
-                console.log("input json object(String):" + params);
+                console.log("input json String:" + params);
                 var apiRequest = new ApiRequest();
                 apiRequest.params = params;
                 if (id != "") {  //修改

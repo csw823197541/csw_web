@@ -1,17 +1,23 @@
 ---
-layout: base_page
+layout: base_div
 ---
 {% include base/tip/tip.html %}
-{% include base/table/table.html apiName = 'authFunctions' %}
-{% include base/modal/modal.html inData = site.data.authFunction %}
+{% include base/table/functionTable.html %}
+{% include base/modal/functionModal.html inData = site.data.authFunction %}
 
 <script type="text/javascript">
+
+    //后台数据接口，全局变量
+    var apiObjUrl = '{{ site.apiAddress }}' + '/api/' + 'authFunctions';
+
+    //第一次获取的table数据，全局变量
+    var globalData;
 
     var tableGen = new TableGen();
     tableGen.editFields = new Array('id', 'parentId', 'fullName', 'icon', 'url', 'target', 'isMenu');
     tableGen.apiName = 'authFunctions';
-    tableGen.modalID = 'myModal';
-    tableGen.tableID = 'table';
+    tableGen.modalID = 'funModal';
+    tableGen.tableID = 'funTable';
     tableGen.setTable = function (inTable) {
         inTable.bootstrapTable({
             height: $(window).height(),
@@ -68,14 +74,35 @@ layout: base_page
             }]
         });
     };
+    tableGen.loadData = function () {
+        $.ajax({
+            url: apiObjUrl,
+            type: 'GET',
+            dataType: 'json',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("Authorization", $.cookie('author_code'));
+            },
+            success: function (data) {
+                globalData = data;
+                initZTree(globalData);
+                initParentId(globalData);
+                tableGen.table.bootstrapTable('load', data);
+            },
+            error: function (err) {
+                alertInfoTip("error", "错误", "获取数据失败");
+            }
+        });
+    };
     window.operateEvents = tableGen.operationEvent();
     tableGen.bind();
 
     var modalGen = new ModalGen();
     modalGen.editFields = new Array('id', 'parentId', 'fullName', 'icon', 'url', 'target', 'isMenu');
-    modalGen.modalID = 'myModal';
+    modalGen.modalID = 'funModal';
     modalGen.saveButtonID = 'saveObj';
-//    modalGen.validates = {type: "notEmpty", className: "notEmpty"};
+    //    modalGen.validates = {type: "notEmpty", className: "notEmpty"};
+
     modalGen.bind();
 
 </script>

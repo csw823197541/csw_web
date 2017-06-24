@@ -1,5 +1,5 @@
 /**
- * Created by Badger on 16/7/27.
+ * Created by csw on 17/5/26.
  */
 
 function TableGen() {
@@ -25,6 +25,7 @@ TableGen.prototype.bind = function () {
 //初始化Table的主函数
 TableGen.prototype.init = function () {
     var $table = $('#' + this.tableID);
+    var $modal = $('#' + this.modalID);
     this.table = $table;
     var $remove = $('#remove');
     var $add = $("#add");
@@ -70,6 +71,7 @@ TableGen.prototype.init = function () {
             .val('')
             .removeAttr('checked')
             .removeAttr('selected');
+        $modal.modal('show');
     });
 
     //当窗口大小被调整时，调整table高度
@@ -145,20 +147,20 @@ TableGen.prototype.operationEvent = function () {
 
 
 TableGen.prototype.loadData = function () {
-    $.ajax({
-        url: apiObjUrl,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/json',
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", $.cookie('author_code'));
-        },
-        success: function (data) {
-            tableGen.table.bootstrapTable('load', data);
-        },
-        error: function (err) {
-        }
-    });
+    // $.ajax({
+    //     url: apiObjUrl,
+    //     type: 'GET',
+    //     dataType: 'json',
+    //     contentType: 'application/json',
+    //     beforeSend: function (xhr) {
+    //         xhr.setRequestHeader("Authorization", $.cookie('author_code'));
+    //     },
+    //     success: function (data) {
+    //         tableGen.table.bootstrapTable('load', data);
+    //     },
+    //     error: function (err) {
+    //     }
+    // });
 };
 
 //刷新数据的方法

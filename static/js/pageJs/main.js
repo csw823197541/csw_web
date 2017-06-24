@@ -355,7 +355,7 @@
                 "F_EnCode": "",
                 "F_FullName": "菜单管理",
                 "F_Icon": "fa fa-barcode",
-                "F_UrlAddress": "/pages/safeAuth/authFunctionIdx.html",
+                "F_UrlAddress": "/pages/safeAuth/authFunctionIndex.html",
                 "F_Target": "iframe",
                 "F_IsMenu": 0,
                 "F_DeleteMark": 0,
