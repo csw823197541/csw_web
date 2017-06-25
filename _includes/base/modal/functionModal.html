@@ -9,8 +9,8 @@
                 <h4 class="modal-title" id="myModalLabel"><strong>添加信息</strong></h4>
             </div>
             <div class="modal-body">
-                <div id="myForm" action="#" method="post" class="form-horizontal">
-                    <div class="form-group">
+                <form id="myForm" action="#" method="post" class="form-horizontal">
+                    <div class="form-group hidden">
                         <label for="id" class="col-sm-2 control-label">ID</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="id" name="id" placeholder="id号默认不显示">
@@ -37,16 +37,16 @@
                                 <option value="0">否</option>
                             </select>
                         </div>
-                        <label for="url" class="col-sm-2 control-label">URL地址</label>
+                        <label for="url" class="col-sm-2 control-label">导航地址</label>
                         <div class="col-sm-4">
                             <input type="text" class="form-control" id="url" name="url"
                                    placeholder="请输入导航地址">
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button id="saveObj" type="button" class="btn btn-success">
+                <button id="saveFunObj" type="button" class="btn btn-success">
                     <i class="glyphicon glyphicon-ok"></i> 保存
                 </button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">
@@ -69,6 +69,8 @@
         $("#parentId").select2('val', '0');
     }
 
+    var parentId, menu;
+
     $(document).ready(function () {
         $("#parentId").select2({
             language: "zh-CN", //设置 提示语言
@@ -77,7 +79,8 @@
         $("#parentId").on("change", function (e) {
             var res = $("#parentId").select2("data");
             var id = res[0].id;
-            console.log(res[0].id);
+            parentId = id;
+            console.log("parentId: " + parentId);
             if (id != "0") { //不是导航菜单
                 $("#isMenu").select2('val', '0');
             }
@@ -85,9 +88,82 @@
                 $("#isMenu").select2('val', '1');
             }
         });
+
         $("#isMenu").select2({
             language: "zh-CN", //设置 提示语言
             width: "70px" //设置下拉框的宽度
+        });
+        $("#isMenu").on("change", function (e) {
+            var res = $("#isMenu").select2("data");
+            var id = res[0].id;
+            menu = id;
+            console.log("menu: " + menu);
+        });
+
+        $('form').bootstrapValidator({
+            message: '这个值没有被验证',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                parentId: {
+                    validators: {
+                        notEmpty: {
+                            message: '父菜单不能为空，或者为导航菜单'
+                        }
+                    }
+                },
+                fullName: {
+                    validators: {
+                        notEmpty: {
+                            message: '菜单名称不能为空'
+                        }
+                    }
+                }
+            }
+        });
+
+        //保存菜单按钮操作
+        $("#saveFunObj").click(function () {
+            var id = $('#id').val();//取得隐藏id控件的值，用来判断saveObj方法是创建记录，还是还是修改记录
+            console.log("pId:" + parentId + ", menu:" + menu);
+            menu = menu == 1 ? true : false;
+            var fullName = $("#fullName").val();
+            var url = $("#url").val();
+            var deleteMark = false;
+            console.log("id:" + id);
+            var params = '{"id":"' + id + '","parentId":' + parentId +
+                ',"fullName":"' + fullName + '","menu":' + menu + ',"url":"' + url + '","deleteMark":' + deleteMark + '}';
+            console.log("input json String:" + params);
+            var apiRequest = new ApiRequest();
+            apiRequest.params = params;
+            if (id != "") {  //修改
+                var url = apiObjUrl + '/' + id;
+                apiRequest.type = "PUT";
+                apiRequest.url = url;
+            } else {    //创建
+                var url = apiObjUrl;
+                apiRequest.type = "POST";
+                apiRequest.url = url;
+            }
+            $.when(apiRequest.send())
+                .done(function (data, state, result) {
+                    console.log("state:" + state);
+                    console.log("success result:" + JSON.stringify(data));
+                    if (state == 'success') {
+                        alertTip("success");
+                        refreshData(apiObjUrl);
+                    } else {
+                        alertTip("error");
+                    }
+                })
+                .fail(function (data, state, result) {
+                    console.log("state: " + state + ", status: " + result.status + ", statusText: " + result.statusText);
+                    alertTip("error");
+                });
+            $("#funModal").modal('hide');
         });
     });
 </script>
